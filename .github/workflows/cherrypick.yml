@@ -1,0 +1,29 @@
+name: Cherry-pick
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: Release tag
+        type: string
+        required: true
+
+jobs:
+  cherry_pick_release:
+    runs-on: ubuntu-latest
+    name: Cherry pick into release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cherry pick into release
+        uses: Xealth/cherry-pick-action@v1.1.0
+        with:
+          allowUserToSpecifyBranchViaLabel: 'true'
+          labelPatternRequirement: 'cherry-pick release'
+          userBranchPrefix: 'release'
+          labels: |
+            cherry-pick
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
