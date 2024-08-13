@@ -17,9 +17,14 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Update description
+        uses: riskledger/update-pr-description@dev
+        with:
+          body: ${{ github.event.pull_request.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Cherry pick into release
         uses: Xealth/cherry-pick-action@v1.1.0
         with:
@@ -28,7 +33,5 @@ jobs:
           userBranchPrefix: 'release-'
           labels: |
             cherry-pick
-          title: '[cherry-pick] ${{ github.event.pull_request.title }}'
-          body: 'cherry-pick of ${{ github.event.pull_request.ref }}'
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
