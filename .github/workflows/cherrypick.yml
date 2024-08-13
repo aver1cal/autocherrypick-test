@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    types: ["closed", "labeled"]
+    types: ["labeled"]
 
 jobs:
   cherry_pick_release:
@@ -28,5 +28,7 @@ jobs:
           userBranchPrefix: 'release-'
           labels: |
             cherry-pick
+          title: '[cherry-pick] ${{ github.event.pull_request.title }}'
+          body: 'cherry-pick of ${{ github.event.pull_request.ref }}'
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
