@@ -1,11 +1,9 @@
 name: Cherry-pick
-
 on:
   pull_request:
     branches:
       - main
     types: ["labeled"]
-
 jobs:
   cherry_pick_release:
     permissions:
@@ -14,21 +12,21 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     name: Cherry pick into release
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'cherry-pick release') && github.event.pull_request.merged == true }}
+    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Cherry pick into release 1
-        uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+      - name: Cherry pick into release
+        uses: Xealth/cherry-pick-action@v1.1.0
         with:
-          branch: release-v2.0
+          allowUserToSpecifyBranchViaLabel: 'true'
+          labelPatternRequirement: 'cherry-pick release'
+          userBranchPrefix: 'release-'
           labels: |
             cherry-pick
           reviewers: |
             aver1cal
-          title: '[cherry-pick] {old_title}'
-          body: 'Cherry-pick of #{old_pull_request_id}'
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
