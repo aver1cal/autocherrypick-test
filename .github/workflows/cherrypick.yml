@@ -22,9 +22,8 @@ jobs:
         uses: aver1cal/cherry-pick-action@v1.0.1
         with:
           allowUserToSpecifyBranchViaLabel: 'true'
-          labelPatternRequirement: 'cherry-pick release-'
-          userBranchPrefix: 'release-'
-          titlePrefix: '[AUTO]'
+          labelPatternRequirement: 'cherry-pick release'
+          userBranchPrefix: '[AUTO] release-'
           body: 'cherry-pick of ${{ github.event.pull_request.html_url }}'
           labels: |
             cherry-pick
