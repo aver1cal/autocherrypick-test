@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Update description
-        uses: riskledger/update-pr-description@dev
+        uses: riskledger/update-pr-description@v2
         with:
           body: ${{ github.event.pull_request.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
