@@ -14,24 +14,21 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     name: Cherry pick into release
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && ${{ contains(github.event.pull_request.labels.*.name, 'cherry-pick release')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Update description
-        uses: riskledger/update-pr-description@v2
+      - name: Cherry pick into release 1
+        uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
         with:
-          body: ${{ github.event.pull_request.html_url }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cherry pick into release
-        uses: Xealth/cherry-pick-action@v1.1.0
-        with:
-          allowUserToSpecifyBranchViaLabel: 'true'
-          labelPatternRequirement: 'cherry-pick release'
-          userBranchPrefix: 'release-'
+          branch: release-v2.0
           labels: |
             cherry-pick
+          reviewers: |
+            aver1cal
+          title: '[cherry-pick] {old_title}'
+          body: 'Cherry-pick of #{old_pull_request_id}'
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
