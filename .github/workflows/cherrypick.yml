@@ -23,7 +23,7 @@ jobs:
       - name: Update description
         uses: riskledger/update-pr-description@v2
         with:
-          body: ${{ github.event.pull_request.url }}
+          body: ${{ github.event.pull_request.html_url }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Cherry pick into release
         uses: Xealth/cherry-pick-action@v1.1.0
