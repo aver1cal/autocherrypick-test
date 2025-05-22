@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cherry pick into release
-        uses: aver1cal/cherry-pick-action@v1.0.3-1
+        uses: aver1cal/cherry-pick-action@v1.0.3-2
         with:
           allowUserToSpecifyBranchViaLabel: 'true'
           labelPatternRequirement: 'cherry-pick release'
